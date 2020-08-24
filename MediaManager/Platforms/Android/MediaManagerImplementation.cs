@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.OS;
 using Android.Support.V4.Media.Session;
+using Android.Util;
 using Com.Google.Android.Exoplayer2;
 using MediaManager.Library;
 using MediaManager.Media;
@@ -117,6 +119,8 @@ namespace MediaManager
 
             if (!IsInitialized)
                 throw new Exception("Cannot Initialize MediaManager");
+            if (this.IsStopped())
+                MediaController.GetTransportControls().Prepare();
         }
 
         private MediaBrowserManager _mediaBrowserManager;
@@ -278,7 +282,8 @@ namespace MediaManager
                 return false;
 
             Queue.CurrentIndex = Queue.IndexOf(mediaItem);
-
+            if (this.IsStopped())
+                MediaController.GetTransportControls().Prepare();
             MediaController.GetTransportControls().SkipToQueueItem(Queue.IndexOf(mediaItem));
             return true;
         }
@@ -292,7 +297,15 @@ namespace MediaManager
                 return false;
 
             Queue.CurrentIndex = index;
-
+            if (this.IsStopped())
+            {
+                MediaController.GetTransportControls().Prepare();
+                while (!this.IsPrepared())
+                {
+                    await Task.Delay(10);
+                    
+                }
+            }
             MediaController.GetTransportControls().SkipToQueueItem(index);
             return true;
         }
