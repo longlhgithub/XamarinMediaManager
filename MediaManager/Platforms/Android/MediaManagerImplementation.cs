@@ -303,7 +303,7 @@ namespace MediaManager
                 while (!this.IsPrepared())
                 {
                     await Task.Delay(10);
-                    
+
                 }
             }
             MediaController.GetTransportControls().SkipToQueueItem(index);

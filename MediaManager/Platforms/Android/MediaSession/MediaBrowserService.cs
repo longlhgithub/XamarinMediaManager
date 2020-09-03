@@ -66,9 +66,9 @@ namespace MediaManager.Platforms.Android.MediaSession
                     if (IsForeground && MediaController.PlaybackState.State == PlaybackStateCompat.StateNone)
                     {
                         //ServiceCompat.StopForeground(this, ServiceCompat.StopForegroundRemove);
-                        StopForeground(true);
-                        StopSelf();
-                        IsForeground = false;
+                        //StopForeground(true);
+                        //StopSelf();
+                        //IsForeground = false;
                     }
                     break;
                 case global::MediaManager.Player.MediaPlayerState.Loading:
@@ -78,7 +78,7 @@ namespace MediaManager.Platforms.Android.MediaSession
                     {
                         //PlayerNotificationManager?.SetOngoing(true);
                         PlayerNotificationManager?.Invalidate();
-
+                        
                         IsForeground = true;
                     }
                     break;
@@ -86,7 +86,7 @@ namespace MediaManager.Platforms.Android.MediaSession
                     if (IsForeground)
                     {
                         //ServiceCompat.StopForeground(this, ServiceCompat.StopForegroundDetach);
-                        StopForeground(false);
+                        //StopForeground(false);
                         //PlayerNotificationManager?.SetOngoing(false);
                         PlayerNotificationManager?.Invalidate();
                         IsForeground = false;
